@@ -1,0 +1,139 @@
+var batch = require('users/fitoprincipe/geetools:batch');
+function addNDVI(image){
+  var NDVI = image.normalizedDifference(["SR_B5","SR_B4"]).rename("NDVI");
+  return image.addBands(NDVI);
+}
+function addNBR(image){
+  var NBR = image.normalizedDifference(["SR_B5","SR_B7"]).rename("NBR");
+  return image.addBands(NBR);
+}
+
+function noData(image) {
+  return image.unmask(-9999);
+}
+
+function acumuladoPr(image){
+  var precipitacion = image.select("pr").multiply(12).rename("acumuladoPr");
+  return image.addBands(precipitacion);
+}
+
+// Make a collection of points.
+var features = ee.FeatureCollection([poligono]);
+
+// Export the FeatureCollection to a KML file.
+//Export.table.toDrive({
+  //collection: features,
+  //description:'Shapefile',
+  //fileFormat: 'SHP',
+//});
+
+//var featuresurl = features.getDownloadURL({
+  //format: "SHP",
+  //filename: "Shapefile"
+  //})
+  
+//print("Pa' descargar aqui - ", featuresurl)
+
+
+
+/**
+ * Function to mask clouds and snow based on the pixel_qa band of Landsat 8 SR data.
+ * @param {ee.Image} image input Landsat 8 SR image
+ * @return {ee.Image} cloudmasked Landsat 8 image
+ */
+function nubes(image) {
+  // Bits 2, 3, 4 and 5 are water, cloud shadow, cloud, and snow, respectively.
+  var cloudShadowBitMask = (1 << 4);
+  var cloudBitMask = (1 << 3);
+  var snowBitMask = (1 << 5);
+  var waterBitMask = (1 << 7);
+  // Get the pixel QA band.
+  var pixelQA = image.select('QA_PIXEL');
+  // Both flags should be set to zero, indicating clear conditions.
+  var mask = pixelQA.bitwiseAnd(cloudShadowBitMask).eq(0)
+                 .and(pixelQA.bitwiseAnd(cloudBitMask).eq(0))
+                 .and(pixelQA.bitwiseAnd(snowBitMask).eq(0))
+                 .and(pixelQA.bitwiseAnd(waterBitMask).eq(0));
+  return image.updateMask(mask);
+}
+
+// Aplicar escala
+function applyScaleFactors(image) {
+  var opticalBands = image.select('SR_B.').multiply(0.0000275).add(-0.2);
+  var thermalBands = image.select('ST_B.*').multiply(0.00341802).add(149.0);
+  return image.addBands(opticalBands, null, true)
+              .addBands(thermalBands, null, true);
+}
+
+var landsat = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2") //"." es la continuacion en cadena del resultado en la sig funcion
+  .filterDate("2014-01-01", "2022-12-31") // filtrar por fechas
+  .filterBounds(poligono) // Filtar por el poligono
+  .map(applyScaleFactors) // Aplixar funcion a varios elementos, en este caso se aplica antes del NDVI para que haga los calculos y se estandarice 
+  .map(nubes)
+  .map(addNDVI)
+  .map(addNBR)
+  .map(noData)
+  .select("NDVI", "NBR") //, "NDVI")
+ ;
+ 
+var dataset = ee.ImageCollection('IDAHO_EPSCOR/TERRACLIMATE')
+                  .filter(ee.Filter.date('2014-01-01', '2020-12-31'))
+                  .select("tmmx","tmmn","pdsi","pr","aet","vs")
+     
+  // var tmmx = dataset.select('tmmx');
+  // var tmmn = dataset.select("tmmn")
+  // var pdsi = dataset.select("pdsi");
+  // var pr = dataset.select("pr");
+  // var aet = dataset.select("aet");
+  // var vs = dataset.select("vs");
+  // var maximumTemperatureVis = {
+  //   min: -300.0,
+  //   max: 300.0,
+  // palette: [
+  //     '1a3678', '2955bc', '5699ff', '8dbae9', 'acd1ff', 'caebff', 'e5f9ff',
+  //   'fdffb4', 'ffe6a2', 'ffc969', 'ffa12d', 'ff7c1f', 'ca531a', 'ff0000',
+  //   'ab0000'
+  // ],
+  // };
+
+
+ 
+var years = ee.List.sequence(2014,2020)
+
+var byYear = ee.ImageCollection.fromImages(
+  years.map(function (y) { 
+    return dataset.filter(ee.Filter.calendarRange(y, y, "year"))
+                  .mean()
+                  .set("system:time_start", ee.Date.fromYMD(y,1,1).millis());
+  }));
+  
+var byYear = byYear.map(acumuladoPr);
+  
+  
+
+
+
+print('prueba', landsat);
+print("prueba-2", byYear);
+
+Map.addLayer(landsat.select("NDVI"), {min:0.0, max:0.9})
+Map.addLayer(byYear.select("acumuladoPr"))
+//Map.addLayer(tmmx, maximumTemperatureVis, 'Maximum Temperature');
+//Map.addLayer(landsat.select("NBR"))
+
+var options = {
+      scale: 30,
+      //maxPixels: 1e13,
+      type: 'float',
+      region: poligono,
+      name: '{id}',
+      crs: 'EPSG:4326',
+      dateFormat: 'yyyy-MM-dd',
+     // async: false
+    };
+
+
+
+batch.Download.ImageCollection.toDrive(byYear, "ambientales", options);
+
+
