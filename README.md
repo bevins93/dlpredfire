@@ -2,8 +2,7 @@
 
 # **Predicción de incendios forestales mediante el uso de técnicas de aprendizaje automatizado: una herramienta de apoyo en la construcción de sostenibilidad**
 
-# Deep Learning Prediction Fire
-Repositorio para el proyecto Alianza para promover el desarrollo de capacidades digitales
+# Repositorio para el proyecto Alianza Huawei-México
 
 ## Base de datos
 Se obtuvo una base de datos de imagenes satelitales de los años 2014-2022, los cuales son 192 imagenes en total. Con las imagenes se realizaron subproductos para su utilización en el proyecto, los cuales se obtuvo NDVI (Índice de vegetación de diferencia normalizada) y NBR (Normalized Burn Ratio). 
