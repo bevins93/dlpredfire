@@ -20,3 +20,6 @@ En este repositorio se deja el codigo del algoritmo de *Deep Learning*
 ## Huawei-UNAM
 
 De antemano agradezco enormemente el prestamo de la infraestructura de los servidores Huawei, a pesar de que se utilizaron poco, el proceso fue de gran ayuda para desarrollar eficientemente el algoritmo. Espero de corazón poder colaborar nuevamente con ustedes.
+
+
+![image](https://github.com/bevins93/dlpredfire/assets/71290362/cb64902a-9007-4ab3-839d-6d7910ecbcc8)
