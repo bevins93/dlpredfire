@@ -22,7 +22,7 @@ Se realizo un algoritmo de aprendizaje profundo (Deep Learning) con el cual se p
 En este repositorio se deja el codigo del algoritmo de *Deep Learning*
 
 ## Huawei-UNAM
-De antemano agradezco enormemente el prestamo de la infraestructura de los servidores Huawei, el utilizar una fuerte infraestructura como los servidores de la alianza, hicieron que el proceso para desarrollar el algoritmo fuera lo más eficientemente. Espero de corazón poder colaborar nuevamente con ustedes.
+De antemano agradezco enormemente el prestamo de la infraestructura de los servidores Huawei, el utilizar una fuerte infraestructura como los servidores de la alianza, hicieron que el proceso para desarrollar el algoritmo fuera lo más eficiente. Espero de corazón poder colaborar nuevamente con ustedes.
 
 
 
