@@ -2,6 +2,11 @@
 
 # **Predicción de incendios forestales mediante el uso de técnicas de aprendizaje automatizado: una herramienta de apoyo en la construcción de sostenibilidad**
 
+## Equipo
+- Dra. Yosune Miquelauregui Graf (https://github.com/yosunemiquela)
+
+- M. en C. Kevin Manuel Galván Lara (https://github.com/bevins93)
+
 # Repositorio para el proyecto Alianza Huawei-México
 
 ## Base de datos
@@ -19,9 +24,6 @@ En este repositorio se deja el codigo del algoritmo de *Deep Learning*
 ## Huawei-UNAM
 De antemano agradezco enormemente el prestamo de la infraestructura de los servidores Huawei, el utilizar una fuerte infraestructura como los servidores de la alianza, hicieron que el proceso para desarrollar el algoritmo fuera lo más eficientemente. Espero de corazón poder colaborar nuevamente con ustedes.
 
-## Equipo
-- Dra. Yosune Miquelauregui Graf (https://github.com/yosunemiquela)
 
-- M. en C. Kevin Manuel Galván Lara (https://github.com/bevins93)
 
 ![image](https://github.com/bevins93/dlpredfire/assets/71290362/cb64902a-9007-4ab3-839d-6d7910ecbcc8)
