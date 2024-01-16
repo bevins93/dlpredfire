@@ -20,7 +20,7 @@ En este repositorio se deja el codigo del algoritmo de *Deep Learning*
 De antemano agradezco enormemente el prestamo de la infraestructura de los servidores Huawei, el utilizar una fuerte infraestructura como los servidores de la alianza, hicieron que el proceso para desarrollar el algoritmo fuera lo más eficientemente. Espero de corazón poder colaborar nuevamente con ustedes.
 
 ## Equipo
-- Dra. Yosune Miquelauregui Graff (https://github.com/yosunemiquela)
+- Dra. Yosune Miquelauregui Graf (https://github.com/yosunemiquela)
 
 - M. en C. Kevin Manuel Galván Lara (https://github.com/bevins93)
 
